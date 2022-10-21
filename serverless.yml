@@ -1,0 +1,19 @@
+service: pets
+
+frameworkVersion: "3"
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  create:
+    handler: src/functions/petmom.handler
+    events:
+      - http:
+          path: /pet-mom
+          method: get
+          cors: true
+
+plugins:
+  - serverless-plugin-typescript
