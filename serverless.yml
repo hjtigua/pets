@@ -12,8 +12,8 @@ environment:
   MONGO_URL: "mongodb://localhost:27018/petsdb"
 
 functions:
-  create:
-    handler: src/functions/pet-create.handler
+  pet-create:
+    handler: src/functions/pet/pet-controller.create
     events:
       - httpApi:
           path: /pet-create

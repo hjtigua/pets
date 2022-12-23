@@ -1,5 +1,5 @@
 import { APIGatewayProxyResult } from "aws-lambda";
-
+/** Throw a Bad Request response */
 export class BadRequestException implements APIGatewayProxyResult {
   statusCode: number;
   headers?: { [header: string]: string | number | boolean } | undefined;

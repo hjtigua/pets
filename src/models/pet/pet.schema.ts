@@ -1,7 +1,7 @@
 import mongoose, { Schema } from "mongoose";
 
 const petSchema = new Schema({
-  name: String,
+  name: { type: String, require: true },
   gender: String,
   birthDay: Date,
   race: { name: String, size: String },
