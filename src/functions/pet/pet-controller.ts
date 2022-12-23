@@ -11,7 +11,7 @@ export const create = async (
   _event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
   const { body } = _event;
-  if (!body) return new BadRequestException();
+  if (!body) throw new BadRequestException("body is required");
 
   const data = JSON.parse(body);
   const result = await petService.create(data);
