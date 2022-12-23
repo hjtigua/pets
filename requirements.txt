@@ -1,0 +1,16 @@
+#User
+name
+last_name
+photo_url
+email
+password
+
+#Adoptions
+user_id
+pet_id
+
+#Pet
+name
+race => name size
+gender
+birthday

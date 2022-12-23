@@ -9,7 +9,7 @@ export const handler = async (
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      message: "Hello from Pet Mom!",
+      message: "Hello from users service",
     }),
   };
 };
