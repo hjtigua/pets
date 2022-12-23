@@ -19,6 +19,6 @@ export class PetService {
         "Invalid request",
         parseErrors(error.errors)
       );
-    throw new InternalServerError();
+    throw new InternalServerError({ message: error });
   }
 }

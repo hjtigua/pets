@@ -10,6 +10,9 @@ export class BadRequestException implements APIGatewayProxyResult {
   isBase64Encoded?: boolean | undefined;
 
   constructor(message = "Bad request", errors?: any) {
+    this.log(message);
+    this.log(errors);
+
     this.headers = {
       "Content-Type": "application/json",
     };
@@ -19,5 +22,9 @@ export class BadRequestException implements APIGatewayProxyResult {
       message: message,
       errors: errors,
     });
+  }
+
+  private log(error?: any) {
+    if (error) console.log(error);
   }
 }
