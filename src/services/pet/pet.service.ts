@@ -1,6 +1,7 @@
 import { Pet } from "../../models/pet/pet.schema.js";
 import { BadRequestException } from "../../utils/http/exeptions/BadRequestException.js";
 import { InternalServerError } from "../../utils/http/exeptions/InternalServerError.js";
+import { NotFoundException } from "../../utils/http/exeptions/NotFoundException.js";
 import { parseErrors } from "../../utils/transform/parseResponse.js";
 
 export class PetService {
@@ -10,6 +11,43 @@ export class PetService {
       return await pet.save();
     } catch (error) {
       this.handleErrors(error);
+    }
+  }
+
+  public async update(id: string, petUpdateDto: any) {
+    try {
+      const updated = await Pet.updateOne({ _id: id }, petUpdateDto);
+      return updated;
+    } catch (error) {
+      this.handleErrors(error);
+    }
+  }
+
+  public async getAll() {
+    try {
+      const pets = await Pet.find({});
+      return pets;
+    } catch (error) {
+      this.handleErrors("Cant get info from database");
+    }
+  }
+
+  public async getById(id: string) {
+    try {
+      const pet = await Pet.find({ _id: id });
+      if (!pet) throw new NotFoundException(`Pet with id ${id} not found`);
+      return pet;
+    } catch (error) {
+      this.handleErrors("Cant get info from database");
+    }
+  }
+
+  public async delete(id: string) {
+    try {
+      const result = await Pet.deleteOne({ _id: id });
+      return result;
+    } catch (error) {
+      this.handleErrors("Cant get info from database");
     }
   }
 
