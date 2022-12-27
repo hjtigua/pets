@@ -36,8 +36,7 @@ export const getById = async (
 ): Promise<APIGatewayProxyResult> => {
   const params = _event.pathParameters;
   const petId = params?.id;
-  const validatedId = parseMongoId(petId);
-  const pet = await petService.getById(validatedId);
+  const pet = await petService.getById(petId!);
 
   return new Response({
     body: pet,

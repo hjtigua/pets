@@ -1,4 +1,5 @@
 import { Pet } from "../../models/pet/pet.schema.js";
+import { MongoIdPipe, ValidateMongoId } from "../../pipes/MongoId.pipe.js";
 import { BadRequestException } from "../../utils/http/exeptions/BadRequestException.js";
 import { InternalServerError } from "../../utils/http/exeptions/InternalServerError.js";
 import { NotFoundException } from "../../utils/http/exeptions/NotFoundException.js";
@@ -28,17 +29,18 @@ export class PetService {
       const pets = await Pet.find({});
       return pets;
     } catch (error) {
-      this.handleErrors("Cant get info from database");
+      this.handleErrors(error);
     }
   }
 
-  public async getById(id: string) {
+  @ValidateMongoId
+  public async getById(@MongoIdPipe id: string) {
     try {
-      const pet = await Pet.find({ _id: id });
+      const pet = await Pet.findOne({ _id: id });
       if (!pet) throw new NotFoundException(`Pet with id ${id} not found`);
       return pet;
     } catch (error) {
-      this.handleErrors("Cant get info from database");
+      this.handleErrors(error);
     }
   }
 
@@ -47,7 +49,7 @@ export class PetService {
       const result = await Pet.deleteOne({ _id: id });
       return result;
     } catch (error) {
-      this.handleErrors("Cant get info from database");
+      this.handleErrors(error);
     }
   }
 
