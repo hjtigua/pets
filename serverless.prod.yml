@@ -17,6 +17,19 @@ functions:
       - httpApi:
           path: /pet-create
           method: post
+  pet-all:
+    handler: src/functions/pet/pet-controller.getAll
+    events:
+      - httpApi:
+          method: get
+          path: /pet
+  pet-get-by-id:
+    handler: src/functions/pet/pet-controller.getById
+    events:
+      - httpApi:
+          method: get
+          path: /pet/{id}
+
   user:
     handler: src/functions/user.handler
     events:

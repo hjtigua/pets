@@ -17,7 +17,7 @@ export class InternalServerError implements APIGatewayProxyResult {
   constructor(error?: IInternalServerException) {
     this.log(error?.errors);
     this.log(error?.message);
-    const message = error?.message || "Error interno del servidor";
+    const message = error?.message || "Internal server error.";
     this.headers = {
       "Content-Type": "application/json",
     };
