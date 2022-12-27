@@ -7,9 +7,7 @@ provider:
   region: us-east-1
   stage: dev
   profile: pet-dev
-  environment:
-    MONGO_URL: mongodb://localhost:27018/petsdb
-    STAGE: ${self:provider.stage}
+  environment: ${file(serverless.variables.${self:provider.stage, opt:stage}.yml)}
 
 functions:
   pet-create:
