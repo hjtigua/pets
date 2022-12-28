@@ -34,6 +34,12 @@ functions:
       - httpApi:
           method: get
           path: /pet/{id}
+  pet-delete:
+    handler: src/functions/pet/pet-controller.detele
+    events:
+      - httpApi:
+          method: delete
+          path: /pet/{id}
 
   user:
     handler: src/functions/user.handler

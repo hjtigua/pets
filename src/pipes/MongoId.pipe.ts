@@ -20,6 +20,8 @@ export function MongoIdPipe(
     propertyKey
   );
 }
+
+// TODO: Add this validator to either a class or a method
 export function ValidateMongoId(
   target: any,
   propertyName: string,

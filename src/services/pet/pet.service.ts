@@ -10,7 +10,10 @@ export class PetService {
 
   @ValidateMongoId
   public async update(@MongoIdPipe id: string, petUpdateDto: any) {
-    const updated = await Pet.updateOne({ _id: id }, petUpdateDto);
+    //TODO: Run Validations on update method
+    const updated = await Pet.findOneAndUpdate({ _id: id }, petUpdateDto, {
+      returnDocument: "after",
+    });
     return updated;
   }
 
@@ -26,7 +29,8 @@ export class PetService {
     return pet;
   }
 
-  public async delete(id: string) {
+  @ValidateMongoId
+  public async delete(@MongoIdPipe id: string) {
     const result = await Pet.deleteOne({ _id: id });
     return result;
   }

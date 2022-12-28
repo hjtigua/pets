@@ -64,7 +64,24 @@ export const getById = async (
   const params = _event.pathParameters;
   const petId = params?.id;
   try {
-    const pet = await petService.getById(petId!);
+    if (!petId) throw new BadRequestException("pet id is required");
+    const pet = await petService.getById(petId);
+    return new Response({
+      body: pet,
+    });
+  } catch (error) {
+    return handleExceptions(error);
+  }
+};
+
+export const detele = async (
+  _event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  const params = _event.pathParameters;
+  const petId = params?.id;
+  try {
+    if (!petId) throw new BadRequestException("pet id is required");
+    const pet = await petService.delete(petId);
     return new Response({
       body: pet,
     });
