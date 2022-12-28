@@ -58,6 +58,19 @@ export const getAll = async (
   }
 };
 
+export const getAllWithChilds = async (
+  _event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  try {
+    const pets = await petService.getAllParentsWithChilds();
+    return new Response({
+      body: pets,
+    });
+  } catch (error) {
+    return handleExceptions(error);
+  }
+};
+
 export const getById = async (
   _event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {

@@ -23,6 +23,15 @@ export class PetService {
     return pets;
   }
 
+  public async getAllParentsWithChilds() {
+    const pets = await Pet.find({ "childs.0": { $exists: true } }).populate(
+      "childs"
+    );
+    return pets;
+  }
+
+  //TODO: Get all puppies childs
+
   @ValidateMongoId
   public async getById(@MongoIdPipe id: string) {
     const pet = await Pet.findOne({ _id: id });
@@ -71,7 +80,7 @@ export class PetService {
     );
 
     if (result.modifiedCount <= 0)
-      throw new NotFoundException(`Parent or child with not found`);
+      throw new NotFoundException(`Parent or child not found`);
 
     return result;
   }

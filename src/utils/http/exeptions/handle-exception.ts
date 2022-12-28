@@ -14,7 +14,9 @@ export const handleExceptions = (error: any): any => {
   }
 
   // unhandle exceptions
-  return new InternalServerError();
+  return new InternalServerError({
+    errors: error,
+  });
 };
 
 const isInBuiltdExeption = (error: any): boolean => {

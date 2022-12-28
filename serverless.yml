@@ -28,6 +28,12 @@ functions:
       - httpApi:
           method: get
           path: /pet
+  pet-all-with-childs:
+    handler: src/functions/pet/pet-controller.getAllWithChilds
+    events:
+      - httpApi:
+          method: get
+          path: /pet-with-childs
   pet-get-by-id:
     handler: src/functions/pet/pet-controller.getById
     events:
