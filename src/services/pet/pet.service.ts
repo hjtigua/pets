@@ -15,6 +15,9 @@ export class PetService {
     const updated = await Pet.findOneAndUpdate({ _id: id }, petUpdateDto, {
       returnDocument: "after",
     });
+
+    if (!updated) throw new NotFoundException(`Pet with ${id} not found`);
+
     return updated;
   }
 
@@ -34,7 +37,7 @@ export class PetService {
 
   @ValidateMongoId
   public async getById(@MongoIdPipe id: string) {
-    const pet = await Pet.findOne({ _id: id });
+    const pet = await Pet.findOne({ _id: id }).populate("childs");
     if (!pet) throw new NotFoundException(`Pet with id ${id} not found`);
     return pet;
   }
