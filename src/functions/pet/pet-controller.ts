@@ -89,3 +89,41 @@ export const detele = async (
     return handleExceptions(error);
   }
 };
+
+export const addChilds = async (
+  _event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  const { body } = _event;
+  const params = _event.pathParameters;
+  const petId = params?.id;
+  try {
+    if (!body) throw new BadRequestException("body is required");
+    if (!petId) throw new BadRequestException("pet id is required");
+    const data = JSON.parse(body);
+    const result = await petService.addChilds(petId, data);
+    return new Response({
+      body: result,
+    });
+  } catch (error) {
+    return handleExceptions(error);
+  }
+};
+
+export const removeChild = async (
+  _event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  const params = _event.pathParameters;
+  const petId = params?.id;
+  const childId = params?.childId;
+  try {
+    if (!petId) throw new BadRequestException("pet is required");
+    if (!childId) throw new BadRequestException("child id is required");
+
+    const result = await petService.removeChild(petId, childId);
+    return new Response({
+      body: result,
+    });
+  } catch (error) {
+    return handleExceptions(error);
+  }
+};

@@ -40,7 +40,18 @@ functions:
       - httpApi:
           method: delete
           path: /pet/{id}
-
+  pet-add-child:
+    handler: src/functions/pet/pet-controller.addChilds
+    events:
+      - httpApi:
+          path: /pet/{id}/add-childs
+          method: post
+  pet-remove-child:
+    handler: src/functions/pet/pet-controller.removeChild
+    events:
+      - httpApi:
+          path: /pet/{id}/{childId}
+          method: delete
   user:
     handler: src/functions/user.handler
     events:

@@ -1,5 +1,6 @@
 import { Pet } from "../../models/pet/pet.schema.js";
 import { MongoIdPipe, ValidateMongoId } from "../../pipes/MongoId.pipe.js";
+import { BadRequestException } from "../../utils/http/exeptions/BadRequestException.js";
 import { NotFoundException } from "../../utils/http/exeptions/NotFoundException.js";
 
 export class PetService {
@@ -29,9 +30,49 @@ export class PetService {
     return pet;
   }
 
-  @ValidateMongoId
   public async delete(@MongoIdPipe id: string) {
     const result = await Pet.deleteOne({ _id: id });
+    if (result.deletedCount <= 0)
+      throw new NotFoundException(`Pet with id ${id} not found`);
+    return result;
+  }
+
+  @ValidateMongoId
+  public async addChilds(@MongoIdPipe parentID: string, childIDS: string[]) {
+    const childsIncludesParentID: boolean = childIDS.some(
+      (child) => child === parentID
+    );
+
+    if (childsIncludesParentID)
+      throw new BadRequestException(
+        `Parent id ${parentID} is includes in childs array`
+      );
+
+    const result = Pet.updateOne(
+      { _id: parentID },
+      {
+        $addToSet: {
+          childs: {
+            $each: childIDS,
+          },
+        },
+      }
+    );
+    return result;
+  }
+
+  @ValidateMongoId
+  public async removeChild(@MongoIdPipe parentID: string, childID: string) {
+    const result = await Pet.updateOne(
+      { _id: parentID },
+      {
+        $pull: { childs: childID },
+      }
+    );
+
+    if (result.modifiedCount <= 0)
+      throw new NotFoundException(`Parent or child with not found`);
+
     return result;
   }
 }

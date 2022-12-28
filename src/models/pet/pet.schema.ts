@@ -18,6 +18,7 @@ const petSchema = new Schema({
     name: { type: String, required: true },
     size: { type: String, required: true },
   },
+  childs: [{ type: mongoose.Schema.Types.ObjectId, ref: "Pet", unique: true }],
 });
 
 export const Pet = mongoose.model("Pet", petSchema);
