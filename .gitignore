@@ -1,5 +1,6 @@
 .serverless
 node_modules
 .build
-#environment prod variables
+#environment variables
 serverless.variables.production.yml
+serverless.variables.pre-production.yml

@@ -7,7 +7,7 @@ provider:
   region: us-east-1
   stage: dev
   profile: pet-dev
-  environment: ${file(serverless.variables.${self:provider.stage, opt:stage}.yml)}
+  environment: ${file(serverless.variables.${opt:stage,self:provider.stage}.yml)}
 
 functions:
   pet-create:
@@ -16,6 +16,12 @@ functions:
       - httpApi:
           path: /pet-create
           method: post
+  pet-update:
+    handler: src/functions/pet/pet-controller.update
+    events:
+      - httpApi:
+          path: /pet-update/{id}
+          method: PATCH
   pet-all:
     handler: src/functions/pet/pet-controller.getAll
     events:

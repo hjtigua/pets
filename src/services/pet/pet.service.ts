@@ -8,7 +8,8 @@ export class PetService {
     return await pet.save();
   }
 
-  public async update(id: string, petUpdateDto: any) {
+  @ValidateMongoId
+  public async update(@MongoIdPipe id: string, petUpdateDto: any) {
     const updated = await Pet.updateOne({ _id: id }, petUpdateDto);
     return updated;
   }

@@ -5,8 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "rimraf .build && npx serverless offline",
-    "deploy:dev": "rimraf .build && npx serverless deploy -c serverless.prod.yml"
+    "dev": "rimraf .build && npx serverless offline --stage dev",
+    "deploy:dev": "rimraf .build && npx serverless deploy --stage pre-production"
   },
   "keywords": [],
   "author": "",

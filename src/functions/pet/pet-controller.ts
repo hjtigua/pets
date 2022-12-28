@@ -25,6 +25,26 @@ export const create = async (
   }
 };
 
+export const update = async (
+  _event: APIGatewayProxyEvent
+): Promise<APIGatewayProxyResult> => {
+  const { body } = _event;
+  const params = _event.pathParameters;
+  const petId = params?.id;
+
+  try {
+    if (!body) throw new BadRequestException("body is required");
+    if (!petId) throw new BadRequestException("pet id is required");
+    const data = JSON.parse(body);
+    const updatedPet = await petService.update(petId, data);
+    return new Response({
+      body: updatedPet,
+    });
+  } catch (error) {
+    return handleExceptions(error);
+  }
+};
+
 export const getAll = async (
   _event: APIGatewayProxyEvent
 ): Promise<APIGatewayProxyResult> => {
